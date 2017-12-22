@@ -22,8 +22,9 @@ def pipsi():
     pass
 
 
-pipsi.add_command(pipsi_cmd.pipsi_update)
-pipsi.add_command(pipsi_cmd.pipsi_upgrade)
+pipsi.add_command(pipsi_cmd.update)
+pipsi.add_command(pipsi_cmd.upgrade)
+pipsi.add_command(pipsi_cmd.upgrade_py)
 
 
 @main.group()

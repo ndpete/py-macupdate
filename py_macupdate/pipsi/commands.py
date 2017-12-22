@@ -5,8 +5,8 @@ import subprocess
 
 
 @click.command('update')
-@click.option('--pkg', type=click.STRING, help='Update single package')
-def pipsi_update(pkg):
+@click.option('-p', '--pkg', type=click.STRING, help='Update single package')
+def update(pkg):
     """Update pipsi command environments"""
     commands = []
     if pkg:
@@ -21,13 +21,21 @@ def pipsi_update(pkg):
 
     for cmd in commands:
         click.secho(f'Upgrading: {cmd[2]}', fg='blue')
-        run_cmd(cmd)
+        subprocess.run(cmd)
+
+
+@click.command('upgrade')
+@click.option('-p', '--pkg', type=click.STRING, help='Update single package')
+@click.pass_context
+def upgrade(ctx, pkg):
+    """alias for update"""
+    ctx.forward(update)
 
 
 @click.command('upgrade-py')
 @click.option('--pkg', type=click.STRING, help='Update single package')
 @click.option('-f', '--force', is_flag=True, help="Supress Confirmation")
-def pipsi_upgrade(pkg, force):
+def upgrade_py(pkg, force):
     """Upgrade Python Env for pipsi commands"""
     if not force:
         click.confirm("Warning, this will uninstall and reinstall pipsi installed scripts, Continue",
@@ -50,7 +58,7 @@ def pipsi_upgrade(pkg, force):
     for cmd in commands:
         if cmd[2] == '--yes':
             click.secho(f'Upgrading: {cmd[3]}', fg='blue')
-        run_cmd(cmd)
+        subprocess.run(cmd)
 
 
 def get_installed():
@@ -61,7 +69,3 @@ def get_installed():
         folders = [f for f in os.listdir(
             path) if os.path.isdir(os.path.join(path, f))]
     return folders
-
-
-def run_cmd(cmd: list):
-    return subprocess.run(cmd)
