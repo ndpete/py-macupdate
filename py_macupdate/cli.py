@@ -36,6 +36,7 @@ def brew():
 
 
 brew.add_command(brew_cmd.update)
+brew.add_command(brew_cmd.outdated)
 brew.add_command(brew_cmd.update_casks)
 
 
