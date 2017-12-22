@@ -7,9 +7,13 @@ import subprocess
 @click.command('update')
 def update():
     """Update brew commands"""
-    click.secho("Updating Brew references")
+    click.secho("Checking for brew updates", fg='blue')
     subprocess.run(['brew', 'update'], stdout=subprocess.DEVNULL)
-    click.secho("Trying upgrade")
+    outdated = subprocess.check_output(['brew', 'outdated'])
+    if not outdated:
+        click.secho("Brew is up-to-date", fg='green')
+        return
+    click.secho("Updating brew packages")
     subprocess.run(['brew', 'upgrade', '--cleanup'])
 
 
@@ -24,7 +28,7 @@ def outdated():
 @click.command('update_casks')
 def update_casks():
     """Update brew casks commands"""
-    click.secho("Checking for updates", fg='blue')
+    click.secho("Checking for cask updates", fg='blue')
     # subprocess.run(['brew', 'update'], stdout=subprocess.DEVNULL)
     outdated = subprocess.check_output(['brew', 'cask', 'outdated', "--quiet"])
     if not outdated:

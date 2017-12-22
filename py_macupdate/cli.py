@@ -58,8 +58,27 @@ def mas():
     """
     pass
 
+
 mas.add_command(mas_cmd.outdated)
 mas.add_command(mas_cmd.update)
+
+
+@main.command('upgrade_all')
+@click.option('-f', '--force', is_flag=True, help="Supress Confirmation")
+@click.pass_context
+def upgrade_all(ctx, force):
+    """
+    Upgrade everything at once
+    """
+    if not force:
+        force = click.confirm("Warning, this will upgrade all packages apps, and the os. It may or may not require a restart once finished. Continue",
+                              default=True, show_default=True, abort=True)
+    ctx.invoke(brew_cmd.update)
+    ctx.invoke(brew_cmd.update_casks)
+    ctx.invoke(pipsi_cmd.update)
+    ctx.invoke(mas_cmd.update)
+    ctx.invoke(sys_cmd.update, force=force)
+    click.secho("Finished updateing all the things", fg='green')
 
 
 if __name__ == '__main__':

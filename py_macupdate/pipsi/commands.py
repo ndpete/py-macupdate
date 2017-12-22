@@ -22,6 +22,7 @@ def update(pkg):
     for cmd in commands:
         click.secho(f'Upgrading: {cmd[2]}', fg='blue')
         subprocess.run(cmd)
+    click.secho("pipsi packages are up-to-date", fg='green')
 
 
 @click.command('upgrade')
