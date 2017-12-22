@@ -1,15 +1,16 @@
 #!/usr/bin/env python3.6
 
 import click
+import subprocess
 
 
 @click.command('outdated')
 def outdated():
     """list outdated apps"""
-    click.secho("Not implemented yet", fg='red')
+    subprocess.run(['mas', 'outdated'])
 
 
 @click.command('update')
 def update():
     """Update Mac App Store Apps"""
-    click.secho("Not implemented yet", fg='red')
+    subprocess.run(['mas', 'upgrade'])
