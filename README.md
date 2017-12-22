@@ -1,2 +1,2 @@
 # py-macupdate
-Simple CLI to run updates for my mac
+Simple CLI suite to run updates for my mac
